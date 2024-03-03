@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Roommate Matcher Results</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mt-5">Your Match Result</h1>
+    <div class="mt-5">
+        {% if match is none %}
+            <p class="alert alert-warning">No match found.</p>
+        {% else %}
+            <p class="alert alert-success">Your best match is {{ match.name }} with a match score of {{ score }}.</p>
+            <p>The match score is calculated based on the preferences you both share. Here's the breakdown:</p>
+            <ul>
+                {% for preference, score in match_score_breakdown.items() %}
+                    <li>{{ preference }}: {{ score }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+<!-- Include Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

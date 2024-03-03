@@ -1,0 +1,226 @@
+    <form method="POST" action="/">
+        <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Include Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <title>Roommate Matcher</title>
+        <!-- Add some inline CSS to style the form -->
+        <style>
+            /* Use a gradient background for the body */
+            body {
+                background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+                color: white;
+            }
+    
+            /* Use a futuristic font for the heading */
+            h1 {
+                font-family: 'Orbitron', sans-serif;
+                font-size: 3rem;
+            }
+    
+            /* Use a neon effect for the button */
+            button {
+                border: none;
+                padding: 15px 25px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: white;
+                background: #08f;
+                box-shadow: 0 0 10px #08f, 0 0 20px #08f, 0 0 40px #08f, 0 0 80px #08f;
+            }
+    
+            /* Change the button color on hover */
+            button:hover {
+                background: #0cf;
+                box-shadow: 0 0 10px #0cf, 0 0 20px #0cf, 0 0 40px #0cf, 0 0 80px #0cf;
+            }
+    
+            /* Add some CSS for the moving objects */
+            .circle {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                opacity: 0.5;
+            }
+    
+            .red {
+                background: red;
+            }
+    
+            .green {
+                background: green;
+            }
+    
+            .blue {
+                background: blue;
+            }
+    
+            .yellow {
+                background: yellow;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <h1 class="text-center mt-5">Find Your Perfect Roommate</h1>
+        <form method="POST" action="/" class="mt-5">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" class="form-control">
+                    <option value="">Select...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Preferences:</label><br>
+                <div class="form-check">
+                    <input type="checkbox" id="non-smoking" name="preferences" value="non-smoking" class="form-check-input">
+                    <label for="non-smoking" class="form-check-label">Non-smoking</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="morning-person" name="preferences" value="morning person" class="form-check-input">
+                    <label for="morning-person" class="form-check-label">Morning person</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="night-owl" name="preferences" value="night owl" class="form-check-input">
+                    <label for="night-owl" class="form-check-label">Night owl</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="likes-pets" name="preferences" value="likes pets" class="form-check-input">
+                    <label for="likes-pets" class="form-check-label">Likes pets</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="vegetarian" name="preferences" value="vegetarian" class="form-check-input">
+                    <label for="vegetarian" class="form-check-label">Vegetarian</label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Add some JavaScript to create and animate the moving objects -->
+    <script>
+        // Get the body element
+        var body = document.querySelector("body");
+    
+        // Create an array of colors for the circles
+        var colors = ["red", "green", "blue", "yellow"];
+    
+        // Create a function to generate a random number between min and max
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    
+        // Create a function to create a circle element with a random color and position
+        function createCircle() {
+            // Create a div element
+            var circle = document.createElement("div");
+            // Add the circle class to it
+            circle.classList.add("circle");
+            // Pick a random color from the colors array
+            var color = colors[random(0, colors.length - 1)];
+            // Add the color class to it
+            circle.classList.add(color);
+            // Set a random left position between 0 and the window width
+            circle.style.left = random(0, window.innerWidth) + "px";
+            // Set a random top position between 0 and the window height
+            circle.style.top = random(0, window.innerHeight) + "px";
+            // Return the circle element
+            return circle;
+        }
+    
+        // Create a function to move a circle element by a random amount
+        function moveCircle(circle) {
+            // Get the current left and top positions of the circle
+            var left = parseInt(circle.style.left);
+            var top = parseInt(circle.style.top);
+            // Generate a random delta for the left and top positions
+            var deltaLeft = random(-50, 50);
+            var deltaTop = random(-50, 50);
+            // Update the left and top positions with the delta
+            left += deltaLeft;
+            top += deltaTop;
+            // Check if the left position is within the window bounds
+            if (left < 0) {
+                left = 0;
+            } else if (left > window.innerWidth - 100) {
+                left = window.innerWidth - 100;
+            }
+            // Check if the top position is within the window bounds
+            if (top < 0) {
+                top = 0;
+            } else if (top > window.innerHeight - 100) {
+                top = window.innerHeight - 100;
+            }
+            // Set the new left and top positions of the circle
+            circle.style.left = left + "px";
+            circle.style.top = top + "px";
+        }
+    
+        // Create a function to check if two circles are overlapping
+        function overlap(circle1, circle2) {
+            // Get the left and top positions of the circles
+            var left1 = parseInt(circle1.style.left);
+            var top1 = parseInt(circle1.style.top);
+            var left2 = parseInt(circle2.style.left);
+            var top2 = parseInt(circle2.style.top);
+            // Get the center coordinates of the circles
+            var x1 = left1 + 50;
+            var y1 = top1 + 50;
+            var x2 = left2 + 50;
+            var y2 = top2 + 50;
+            // Calculate the distance between the centers
+            var distance = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+            // Check if the distance is less than the sum of the radii
+            if (distance < 100) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    
+        // Create a function to check if a circle is overlapping with any of the existing circles
+        function overlapAny(circle, circles) {
+            // Loop through the circles array
+            for (var i = 0; i < circles.length; i++) {
+                // Check if the circle is overlapping with the current circle
+                if (overlap(circle, circles[i])) {
+                    return true;
+                }
+            }
+            // If no overlap is found, return false
+            return false;
+        }
+    
+        // Create an array to store the circles
+        var circles = [];
+    
+        // Create a function to add a new circle to the body and the circles array
+        function addCircle() {
+            // Create a circle element
+            var circle = createCircle();
+            // Check if the circle is overlapping with any of the existing circles
+            while (overlapAny(circle, circles)) {
+                // If yes, create a new circle element
+                circle = createCircle();
+            }
+        }
+            //
+
+
